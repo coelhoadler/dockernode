@@ -1,4 +1,4 @@
-version: "3.8"
+version: "3.1"
 
 services:
   app:
@@ -8,3 +8,18 @@ services:
       - "3000:3000"
     volumes:
       - .:/usr/app
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: FIAP
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+      - 8080:8080
