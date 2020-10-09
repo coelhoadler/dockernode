@@ -16,7 +16,7 @@ solução baseada em Microserviços.__
 - NodeJs
 - Express
 - Mysql
-- ...
+- Mysql Workbench
 
 ### Na sua implementação deve ser utilizado: 
 - [x] um banco de dados relacional (mysql ou postgree)
