@@ -1,11 +1,10 @@
 const express = require('express');
 const routes = express.Router();
-const FirstController = require('./controllers/FirstController');
 
-routes.get('/', FirstController.index);
+const ProductController = require('./controllers/ProductController');
+const ProductsCategoryController = require('./controllers/ProductsCategoryController');
 
-routes.get('/home', (req,res) => {
-    res.send(`<h1>Trabalhinho do Tadeu</h1>`);
-});
+routes.get('/products/:category', ProductsCategoryController.index);
+routes.get('/product/:productId', ProductController.index);
 
 module.exports = routes;

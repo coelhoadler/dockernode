@@ -4,7 +4,7 @@ const connection = mysql.createConnection({
   port     : 3306,
   user     : 'root',
   password : 'root',
-  database : 'FIAP'
+  database : 'amazon'
 });
 
 module.exports = connection;
