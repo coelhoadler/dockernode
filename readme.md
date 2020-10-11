@@ -5,8 +5,8 @@ Amazon, alguns desejos dos usuários são descritos abaixo e você deve desenhar
 solução baseada em Microserviços.__
 
 - Adler
-  - Possibilidade de visualizar os produtos de um determinado gênero;
-  - Possibilidade de visualizar os detalhes de cada produto;
+  - [x] Possibilidade de visualizar os produtos de um determinado gênero; ex (GET products/:category)
+  - [x] Possibilidade de visualizar os detalhes de cada produto; ex (GET product-detail/:productId)
 
 - Bea  
   - Possibilidade de adicionar itens na sua lista de desejo;
