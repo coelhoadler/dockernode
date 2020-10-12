@@ -1,11 +1,19 @@
 version: "3.5"
 
 services:
-  app:
-    build: .
+  product:
+    build: ./ms-product
     command: npm start
     ports: 
       - 3000:3000
+    volumes:
+      - .:/usr/app
+
+  order:
+    build: ./ms-order
+    command: npm start
+    ports: 
+      - 4798:4798
     volumes:
       - .:/usr/app
 
