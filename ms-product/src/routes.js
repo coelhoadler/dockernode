@@ -6,11 +6,9 @@ const ProductMostSeenController = require('./controllers/ProductMostSeenControll
 const ProductController = require('./controllers/ProductController');
 const ProductsCategoryController = require('./controllers/ProductsCategoryController');
 
-const endpoint = '/products/'
-
-routes.get(`${endpoint}search`, ProductSearchController.index);
-routes.get(`${endpoint}most-seen`, ProductMostSeenController.index);
-routes.get(`${endpoint}:category`, ProductsCategoryController.index);
-routes.get(`${endpoint}:productId`, ProductController.index);
+routes.get(`/products/search`, ProductSearchController.index);
+routes.get(`/products/most-seen`, ProductMostSeenController.index);
+routes.get(`/products/:category`, ProductsCategoryController.index);
+routes.get(`/product/:productId`, ProductController.index);
 
 module.exports = routes;
