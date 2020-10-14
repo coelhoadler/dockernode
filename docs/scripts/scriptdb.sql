@@ -10,7 +10,7 @@ create table User (
     UserEmail varchar(30) not null,
     UserAddress varchar(200) not null,
     UserCep varchar(8) not null,
-    UserCpf varchar(11) not null,
+    UserCpf varchar(11) unique not null,
     UserBirth datetime not null,
     constraint PK_UserId primary key (UserId)
 );
@@ -61,5 +61,6 @@ create table Wish (
     UserId smallint unsigned not null,
     ProductId smallint unsigned not null,
     constraint FK_UserId_Wish foreign key (UserId) references User (UserId),
-    constraint FK_ProductId_Wish foreign key (ProductId) references Product (ProductId)
+    constraint FK_ProductId_Wish foreign key (ProductId) references Product (ProductId),
+    primary key (UserId, ProductId)
 );
