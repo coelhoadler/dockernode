@@ -2,8 +2,8 @@ const conn = require('../config/db');
 
 module.exports = {
     async index(req, res) {
-        const productId = req.params.productId;
-        conn.query(`SrELECT * FROM product WHERE product_id = '${productId}'`, (error, results, fields) => {
+        const { productId } = req.params;
+        conn.query(`SELECT * FROM Product WHERE ProductId = '${productId}'`, (error, results, fields) => {
             if (error) {
                 return res.status(500).json({
                    error
