@@ -12,7 +12,7 @@ solução baseada em Microserviços.__
 
   - ms wishlist 
     - Bea
-        - [ ] Possibilidade de adicionar itens na sua lista de desejo;
+        - [x] Possibilidade de adicionar itens na sua lista de desejo; ex (POST /wishes)
   - ms desk
     - Bea
         - [ ] Possibilidade de abrir um chamado técnico de algum problema que está acontecendo;
