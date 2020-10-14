@@ -6,15 +6,15 @@ const knex = require('knex')({
 
 module.exports = {
     async index(req, res) {
-        const { category } = req.params;
 
-        const query = knex('product')
-            .where('ProductCategory', 'like', `%${category}%`);
+        const {limit} = req.query;
+
+        const query = knex('product').orderBy('ProductViews', 'desc').limit(limit || 5).offset(0);
 
         conn.query(query.toString(), (error, results, fields) => {
             if (error) {
                 return res.status(500).json({
-                   error
+                    error
                 });
             } else {
                 if (results.length > 0) {
@@ -24,9 +24,9 @@ module.exports = {
                     });
                 } else {
                     return res.status(404).json({
-                        message: `Category "${category}" was not found.`,
+                        message: `No products found for the search params.`,
                         products: []
-                    });                    
+                    });
                 }
             }
         });

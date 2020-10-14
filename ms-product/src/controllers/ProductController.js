@@ -1,9 +1,17 @@
 const conn = require('../config/db');
 
+const knex = require('knex')({
+    client: "mysql"
+});
+
 module.exports = {
     async index(req, res) {
         const { productId } = req.params;
-        conn.query(`SELECT * FROM Product WHERE ProductId = '${productId}'`, (error, results, fields) => {
+
+        const query = knex('product')
+            .where('ProductId', productId);
+
+        conn.query(query.toString, (error, results, fields) => {
             if (error) {
                 return res.status(500).json({
                    error
