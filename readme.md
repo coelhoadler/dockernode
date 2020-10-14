@@ -8,7 +8,7 @@ solução baseada em Microserviços.__
   - ms product
     - Adler
         - [x] Possibilidade de visualizar os produtos de um determinado gênero; ex (GET products/:category)
-        - [x] Possibilidade de visualizar os detalhes de cada produto; ex (GET product-detail/:productId)
+        - [x] Possibilidade de visualizar os detalhes de cada produto; ex (GET product/:productId)
 
   - ms wishlist 
     - Bea
@@ -19,8 +19,10 @@ solução baseada em Microserviços.__
 
   - ms search
     - Kelvin
-        - [ ] Possibilidade de buscar um produto por palavra-chave;
-        - [ ] Possibilidade de exibir os produtos mais vistos por categorias;
+        - [x] Possibilidade de buscar um produto por palavra-chave; ex (GET products/search?keyWord=Smart Tv)
+          - Os parâmetros "productPrice" e "productAmount" também são aceitos com valor numérico.
+        - [x] Possibilidade de exibir os produtos mais vistos por categorias; (GET products/most-seen)
+          - O parâmetro "limit" é opcional. O limite padrão é 5.
 
   - ms tax
     - Michel
