@@ -19,9 +19,9 @@ solução baseada em Microserviços.__
 
   - ms search
     - Kelvin
-        - [x] Possibilidade de buscar um produto por palavra-chave; ex (GET product/search?keyWord=Smart Tv)
+        - [x] Possibilidade de buscar um produto por palavra-chave; ex (GET products/search?keyWord=Smart Tv)
           - Os parâmetros "productPrice" e "productAmount" também são aceitos com valor numérico.
-        - [x] Possibilidade de exibir os produtos mais vistos por categorias; (GET product/most-seen)
+        - [x] Possibilidade de exibir os produtos mais vistos por categorias; (GET products/most-seen)
           - O parâmetro "limit" é opcional. O limite padrão é 5.
 
   - ms tax
