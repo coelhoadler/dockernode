@@ -8,7 +8,7 @@ module.exports = {
     async index(req, res) {
         const { category } = req.params;
 
-        const query = knex('product')
+        const query = knex('Product')
             .where('ProductCategory', 'like', `%${category}%`);
 
         conn.query(query.toString(), (error, results, fields) => {
