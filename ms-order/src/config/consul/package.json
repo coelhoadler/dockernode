@@ -1,0 +1,12 @@
+{
+    "name": "case-amazon-consul",
+    "version": "1.0.0",
+    "description": "",
+    "main": "consul.js",
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+     
+    }
+  }

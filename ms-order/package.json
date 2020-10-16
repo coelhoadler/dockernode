@@ -1,13 +1,12 @@
 {
-  "name": "case-amazon",
+  "name": "case-amazon-ms-order",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -L ./src/index.js",
-    "start-product": "nodemon -L ./ms-product/src/index.js",
-    "start-order": "nodemon -L ./ms-order/src/index.js"
+    "start": "npm install && node ./src/index.js",
+    "dev": "nodemon -L ./src/index.js"
   },
   "keywords": [],
   "author": "",
@@ -15,8 +14,13 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "knex": "^0.21.6",
     "mysql": "^2.18.1",
-    "nodemon": "^2.0.4",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "consul": "^0.38.0",
+    "dotenv": "^8.2.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
   }
 }

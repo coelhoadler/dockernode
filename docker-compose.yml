@@ -8,7 +8,15 @@ services:
     ports: 
       - 3000:3000
     volumes:
-      - ./ms-product:/usr/app
+      - ./ms-product:/usr/ms-product
+  order:
+    build:
+      context: ./ms-order
+    command: npm start
+    ports: 
+      - 3536:3536
+    volumes:
+      - ./ms-order:/usr/ms-order
   db:
     image: mysql
     command: 
@@ -29,3 +37,8 @@ services:
     restart: always
     ports:
       - 8080:8080
+  consul:
+    image: consul
+    restart: always
+    ports:
+      - 8500:8500
