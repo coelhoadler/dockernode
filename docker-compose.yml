@@ -11,6 +11,16 @@ services:
       - 3001:3001
     volumes:
       - ./ms-product:/usr/app
+  desk:
+    build:
+      context: ./ms-desk
+    command: npm start
+    environment:
+      NODE_PORT: 3002
+    ports: 
+      - 3002:3002
+    volumes:
+      - ./ms-desk:/usr/app      
   db:
     image: mysql
     command: 
