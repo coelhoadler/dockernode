@@ -3,7 +3,7 @@ insert into User (UserName, UserLogin, UserPassword, UserEmail, UserAddress, Use
 ('Beatriz Bafini', 'beab', '123@@2', 'beabafini2@gmail.com', 'Rua Manoel da Costa, 260', '05134160', '22222222222', '1997-06-18'),
 ('Kelvin Marques', 'kelvinm', '123@@3', 'kelvinmarques@gmail.com', 'Av Elisio Cordeiro, 1059', '05136001', '33333333333', '1995-01-01'),
 ('Michel Santana', 'michels', '123@@4', 'michelsantana@gmail.com', 'Av Sao Joao, 567', '02168060', '44444444444', '1995-01-01');
-select * from user;
+select * from User order by UserId;
 
 insert into Product (ProductName, ProductDesc, ProductPrice, ProductAmount, ProductCategory, ProductViews) values
 ('Playstation 5 (versão com leitor de jogos)', 'Nova geração de vídeo-game da Sony', 4999, 99, 'games;eletronico;entretenimento', 3),
@@ -17,4 +17,11 @@ insert into Wish (UserId, ProductId) values
 (2, 1), (2, 4),
 (3, 1), (3, 2), (3, 3), (3, 4),
 (4, 2);
-select * from wish order by userid;
+select * from Wish order by UserId;
+
+insert into Desk (UserId, DeskDesc, DeskDate) values
+(1, 'Perdi minha conta.', '2020-05-10'),
+(3, 'Como rastrear meu pedido?', '2020-08-05'),
+(2, 'Gostaria de cancelar meu pedido.', '2020-10-01');
+select * from Desk order by UserId;
+
