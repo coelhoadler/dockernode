@@ -11,7 +11,7 @@ module.exports = {
         const query = knex('Product')
             .where('ProductId', productId);
 
-        conn.query(query.toString, (error, results, fields) => {
+        conn.query(query.toString(), (error, results, fields) => {
             if (error) {
                 return res.status(500).json({
                    error
