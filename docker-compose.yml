@@ -20,7 +20,17 @@ services:
     ports: 
       - 3002:3002
     volumes:
-      - ./ms-desk:/usr/app      
+      - ./ms-desk:/usr/app
+  wishlist:
+    build:
+      context: ./ms-wishlist
+    command: npm start
+    environment:
+      NODE_PORT: 3003
+    ports: 
+      - 3003:3003
+    volumes:
+      - ./ms-wishlist:/usr/app
   db:
     image: mysql
     command: 
