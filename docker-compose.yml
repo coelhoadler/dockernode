@@ -2,9 +2,7 @@ version: "3.5"
 
 services:
   product:
-    build:
-      context: ./ms-product
-    command: npm start
+    image: acoeelho/case-amazon_product
     environment:
       NODE_PORT: 3001
     ports: 
@@ -12,9 +10,7 @@ services:
     volumes:
       - ./ms-product:/usr/app
   desk:
-    build:
-      context: ./ms-desk
-    command: npm start
+    image: acoeelho/case-amazon_desk
     environment:
       NODE_PORT: 3002
     ports: 
@@ -22,9 +18,7 @@ services:
     volumes:
       - ./ms-desk:/usr/app
   wishlist:
-    build:
-      context: ./ms-wishlist
-    command: npm start
+    image: acoeelho/case-amazon_wishlist
     environment:
       NODE_PORT: 3003
     ports: 
