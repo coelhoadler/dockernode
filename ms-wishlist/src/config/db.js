@@ -1,9 +1,9 @@
 const mysql      = require('mysql');
 const connection = mysql.createConnection({
-  host     : 'localhost',
+  host     : 'db',
   port     : 3306,
   user     : 'root',
-  password : 'beatriz18',
+  password : 'root',
   database : 'amazondb'
 });
 
