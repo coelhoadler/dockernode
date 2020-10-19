@@ -26,10 +26,11 @@ solução baseada em Microserviços.__
 
   - ms tax
     - Michel
-        - [ ] Possibilidade de acompanhar os dados do seu pedido;
-  - ms order
-    - Michel
         - [ ] Possibilidade de calcular o frete de uma compra;  
+  - ms order | [x] MySQL | [x] Consul | [ ] Kafka
+    - Michel
+        - [x] Possibilidade de acompanhar os dados do seu pedido;
+        - [x] Possibilidade de fazer um pedido; (extra)
 
 ## Tecnologias usadas
 - NodeJs
@@ -42,7 +43,7 @@ solução baseada em Microserviços.__
 ### Na sua implementação deve ser utilizado: 
 - [x] um banco de dados relacional (mysql ou postgree);
 - [ ] um serviço de mensageria, por exemplo Apache Kafka;
-- [ ] um serviço de gerenciamneto de configurações;
+- [x] um serviço de gerenciamneto de configurações; (Consul) 
 
 ## Integrantes
 - Adler Coelho

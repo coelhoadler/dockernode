@@ -47,11 +47,16 @@ module.exports = (consul, { serviceName, serviceId, serviceNote, serviceTags, se
                         }
                     });
                 } else {
+                    registerDefaultKeys();
                     registerWatcher();
                     clearInterval(registerTimeout);
                 }
             }, 2500);
         }
+    }
+
+    async function registerDefaultKeys(){
+        
     }
 
     async function updateKeyValue(key, value) {
