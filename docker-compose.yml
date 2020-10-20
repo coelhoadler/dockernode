@@ -8,7 +8,23 @@ services:
     ports: 
       - 3001:3001
     volumes:
-      - ./ms-product:/usr/app
+      - ./ms-product:/usr/ms-product
+  order:
+    build:
+      context: ./ms-order
+    command: npm start
+    ports: 
+      - 3536:3536
+    volumes:
+      - ./ms-order:/usr/ms-order
+  shipping:
+    build:
+      context: ./ms-shipping
+    command: npm start
+    ports: 
+      - 3535:3535
+    volumes:
+      - ./ms-shipping:/usr/ms-shipping
   desk:
     image: acoeelho/case-amazon_desk
     environment:
@@ -16,7 +32,7 @@ services:
     ports: 
       - 3002:3002
     volumes:
-      - ./ms-desk:/usr/app
+      - ./ms-desk:/usr/ms-desk
   wishlist:
     image: acoeelho/case-amazon_wishlist
     environment:
@@ -24,27 +40,29 @@ services:
     ports: 
       - 3003:3003
     volumes:
-      - ./ms-wishlist:/usr/app
+      - ./ms-wishlist:/usr/ms-wishlist
   db:
     image: mysql
-    command: 
-        --default-authentication-plugin=mysql_native_password
-        --init-file /data/application/init.sql
+    command: --default-authentication-plugin=mysql_native_password
     ports:
         - 3306:3306
     restart: always
     environment:
-      MYSQL_ROOT_USER: root
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: amazondb
     volumes:
-        - ./db-volume/init.sql:/data/application/init.sql
+        - ./localdb:/var/lib/mysql
   adminer:
     image: adminer
     restart: always
     ports:
       - 8080:8080
+  consul:
+    image: consul
+    restart: always
+    ports:
+      - 8500:8500
   zookeeper:
     image: wurstmeister/zookeeper
     ports:

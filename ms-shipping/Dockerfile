@@ -1,6 +1,6 @@
 FROM node:alpine
 
-WORKDIR /usr/ms-product
+WORKDIR /usr/ms-shipping
 
 COPY package*.json ./
 
@@ -8,6 +8,6 @@ RUN npm install
 
 COPY ./ ./
 
-EXPOSE ${NODE_PORT}
+EXPOSE 3535
 
 CMD [ "npm", "start" ]
