@@ -1,6 +1,7 @@
 # dependencies
 node_modules
 db-volume
+localdb
 
 # IDEs and editors
 /.idea

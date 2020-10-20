@@ -10,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use(require('./routes'));
-const PORT = 3536;
+const PORT = process.env.PORT || 3535;
 
 server.listen(PORT, () => {
     consulRegistration.register();

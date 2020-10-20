@@ -8,7 +8,23 @@ services:
     ports: 
       - 3001:3001
     volumes:
-      - ./ms-product:/usr/app
+      - ./ms-product:/usr/ms-product
+  order:
+    build:
+      context: ./ms-order
+    command: npm start
+    ports: 
+      - 3536:3536
+    volumes:
+      - ./ms-order:/usr/ms-order
+  shipping:
+    build:
+      context: ./ms-shipping
+    command: npm start
+    ports: 
+      - 3535:3535
+    volumes:
+      - ./ms-shipping:/usr/ms-shipping
   desk:
     image: acoeelho/case-amazon_desk
     environment:
@@ -16,7 +32,7 @@ services:
     ports: 
       - 3002:3002
     volumes:
-      - ./ms-desk:/usr/app
+      - ./ms-desk:/usr/ms-desk
   wishlist:
     image: acoeelho/case-amazon_wishlist
     environment:
@@ -24,7 +40,7 @@ services:
     ports: 
       - 3003:3003
     volumes:
-      - ./ms-wishlist:/usr/app
+      - ./ms-wishlist:/usr/ms-wishlist
   db:
     image: mysql
     command: 
@@ -45,6 +61,11 @@ services:
     restart: always
     ports:
       - 8080:8080
+  consul:
+    image: consul
+    restart: always
+    ports:
+      - 8500:8500
   zookeeper:
     image: wurstmeister/zookeeper
     ports:
