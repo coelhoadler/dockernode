@@ -8,7 +8,7 @@ module.exports = {
     async index(req, res) {
         const { productId } = req.params;
 
-        const query = knex('product')
+        const query = knex('Product')
             .where('ProductId', productId);
 
         conn.query(query.toString, (error, results, fields) => {

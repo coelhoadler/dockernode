@@ -15,14 +15,13 @@ solução baseada em Microserviços.__
         - [x] Possibilidade de adicionar itens na sua lista de desejo; ex (POST /wishes)
   - ms desk
     - Bea
-        - [ ] Possibilidade de abrir um chamado técnico de algum problema que está acontecendo;
+        - [x] Possibilidade de abrir um chamado técnico de algum problema que está acontecendo;
 
   - ms search
     - Kelvin
         - [x] Possibilidade de buscar um produto por palavra-chave; ex (GET products/search?keyWord=Smart Tv)
-          - Os parâmetros "productPrice" e "productAmount" também são aceitos com valor numérico.
-        - [x] Possibilidade de exibir os produtos mais vistos por categorias; (GET products/most-seen)
-          - O parâmetro "limit" é opcional. O limite padrão é 5.
+        - [x] Possibilidade de exibir os produtos mais vistos por categorias; (GET products/search?mostSeen=true)
+        - Nota: Os parâmetros "productPrice", "productAmount" e "limit" também são aceitos com valor numérico.
 
   - ms shipping (antigo ms tax)
     - Michel

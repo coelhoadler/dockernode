@@ -7,17 +7,23 @@ const knex = require('knex')({
 module.exports = {
     async index(req, res) {
 
-        const {keyWord, productPrice, productAmount} = req.query;
+        const {keyWord, productPrice, productAmount, limit, mostSeen} = req.query;
 
-        if (!keyWord && !productPrice && !productAmount) {
+        if (!keyWord && !productPrice && !productAmount && !limit && !mostSeen) {
             return res.status(404).json({
                 message: `Unpresent searching params.`,
                 products: []
             });
         }
 
-        const query = knex('product')
+        const query = knex('Product')
 
+        if (mostSeen) {
+            query.orderBy('ProductViews', 'desc')
+        }
+        if (limit) {
+            query.limit(limit)
+        }
         if (keyWord) {
             query.where('ProductName', 'like', `%${keyWord}%`)
                 .orWhere('ProductDesc', 'like', `%${keyWord}%`)
@@ -30,8 +36,6 @@ module.exports = {
             query.where('ProductAmount', '<', productAmount * 1.1)
                 .where('ProductAmount', '>', productAmount * .9);
         }
-        
-        console.log(query.toString());
 
         conn.query(query.toString(), (error, results, fields) => {
             if (error) {
