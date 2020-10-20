@@ -5,8 +5,12 @@ module.exports = {
     serviceId: 'ms-order',
     serviceNote: 'Orders service',
     serviceTags: ['order', 'orders', 'amaz', 'microservice'],
-    serviceHealthCheckHost: process.env.HEALTHCHECK_HOST,
-    serviceHealthCheckPort: process.env.HEALTHCHECK_PORT,
+    serviceHost: process.env.SERVICE_HOST,
+    servicePort: process.env.SERVICE_PORT,
     consulHost: process.env.CONSUL_HOST,
-    consulPort: process.env.CONSUL_PORT
+    consulPort: process.env.CONSUL_PORT,
+    registerIntervalTry: 3000,
+    defaultsConfigurations: {
+        MsOrder: `http://${process.env.SERVICE_HOST}:${process.env.SERVICE_PORT}`
+    }
 }

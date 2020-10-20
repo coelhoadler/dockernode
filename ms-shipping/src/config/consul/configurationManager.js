@@ -3,7 +3,12 @@ let instance = null;
 class ConfigurationManager {
 
     constructor() {
-        this.ShippingCalculateUrl = "";
+        this.ShippingCalculateUrl = '';
+        this.MsShipping = '';
+        this.MsOrder = '';
+        this.MsProduct = '';
+        this.MsDesk = '';
+        this.MsWishlist = '';
     }
 
     updateConfig(key, value){

@@ -8,7 +8,7 @@ const registerStatus = {
 
 let status = registerStatus.off;
 
-module.exports = (consul, { serviceName, serviceId, serviceNote, serviceTags, serviceHealthCheckHost, serviceHealthCheckPort, consulHost = 'localhost', consulPort = 8500 }) => {
+module.exports = (consul, { serviceName, serviceId, serviceNote, serviceTags, serviceHost, servicePort, consulHost = 'localhost', consulPort = 8500, registerIntervalTry = 2500, defaultsConfigurations }) => {
 
     const client = consul(({
         host: consulHost,
@@ -20,11 +20,11 @@ module.exports = (consul, { serviceName, serviceId, serviceNote, serviceTags, se
             name: serviceName, // nome do serviço no consul
             id: serviceId, // ID do serviço no consul
             tags: serviceTags || [], // tags
-            address: `http://${serviceHealthCheckHost}`, //endereço do microserviço que está se registrando 
-            port: ~~(serviceHealthCheckPort), //porta do microserviço que está se registrando 
+            address: `http://${serviceHost}`, //endereço do microserviço que está se registrando 
+            port: ~~(servicePort), //porta do microserviço que está se registrando 
             check: {
                 deregisterCriticalServiceAfter: "60s", // desregistrar? do serviço após x seg de inatividade 
-                http: `http://${serviceHealthCheckHost}:${serviceHealthCheckPort}/health`, // url de checagem de "saúde" do serviço
+                http: `http://${serviceHost}:${servicePort}/health`, // url de checagem de "saúde" do serviço
                 interval: '30s',
                 timeout: '5s',
                 notes: serviceNote
@@ -47,20 +47,36 @@ module.exports = (consul, { serviceName, serviceId, serviceNote, serviceTags, se
                         }
                     });
                 } else {
+                    console.log('service registered...');
                     registerWatcher();
+                    createDefaultValues(defaultsConfigurations);
                     clearInterval(registerTimeout);
                 }
-            }, 2500);
+            }, registerIntervalTry);
+        }
+    }
+
+    async function createDefaultValues(defaultsConfigurations) {
+        const keys = Object.keys(defaultsConfigurations);
+        for (var key of keys) {
+            const value = ConfigurationManager[key];
+            if (!value) {
+                ConfigurationManager[key] = defaultsConfigurations[key];
+            }
         }
     }
 
     async function updateKeyValue(key, value) {
+        if (status == registerStatus.off) register();
+
         await client.kv.set(`${key}`, value, (err, result) => {
             if (err) console.error(err);
         });
     }
 
     async function getKeyValue(key) {
+        if (status == registerStatus.off) register();
+
         if (key) {
             return new Promise((resolve, reject) => {
                 client.kv.get(`${key}`, (err, result) => {
@@ -74,6 +90,8 @@ module.exports = (consul, { serviceName, serviceId, serviceNote, serviceTags, se
     }
 
     async function getAllKeys() {
+        if (status == registerStatus.off) register();
+
         return new Promise((resolve, reject) => {
             client.kv.keys((err, result) => {
                 if (err) {
@@ -85,6 +103,8 @@ module.exports = (consul, { serviceName, serviceId, serviceNote, serviceTags, se
     }
 
     async function registerWatcher() {
+        if (status == registerStatus.off) register();
+
         const keys = Object.keys(ConfigurationManager);
 
         for (var key of keys) {
@@ -95,14 +115,15 @@ module.exports = (consul, { serviceName, serviceId, serviceNote, serviceTags, se
             });
 
             watch.on('change', function (data, res) {
-                console.log(data);
                 if (data) {
+                    console.log(`the key ${data.Key} was updated and its new value is ${data.Value}`);
                     ConfigurationManager.updateConfig(data.Key, data.Value);
                 }
             });
 
             watch.on('error', function (err) {
-                instance.registered = false;
+                console.error('The consul connection maybe was refused... retrying');
+                status = registerStatus.off;
             });
         }
     }
@@ -114,6 +135,3 @@ module.exports = (consul, { serviceName, serviceId, serviceNote, serviceTags, se
         updateKeyValue
     }
 };
-
-
-

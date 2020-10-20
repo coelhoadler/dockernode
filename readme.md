@@ -24,9 +24,9 @@ solução baseada em Microserviços.__
         - [x] Possibilidade de exibir os produtos mais vistos por categorias; (GET products/most-seen)
           - O parâmetro "limit" é opcional. O limite padrão é 5.
 
-  - ms tax
+  - ms shipping (antigo ms tax)
     - Michel
-        - [ ] Possibilidade de calcular o frete de uma compra;  
+        - [x] Possibilidade de calcular o frete de uma compra;  
   - ms order | [x] MySQL | [x] Consul | [ ] Kafka
     - Michel
         - [x] Possibilidade de acompanhar os dados do seu pedido;
@@ -43,7 +43,19 @@ solução baseada em Microserviços.__
 ### Na sua implementação deve ser utilizado: 
 - [x] um banco de dados relacional (mysql ou postgree);
 - [ ] um serviço de mensageria, por exemplo Apache Kafka;
-- [x] um serviço de gerenciamneto de configurações; (Consul) 
+- [x] Integração com api de CEP;
+- [x] um serviço de gerenciamento de configurações; (Consul)
+
+### Implementar Consul no seu ms
+- Instalar consul $ npm install consul
+- Copiar a pasta shared/consul (Este passo é necessário pois ainda não descobri como criar um modulo compartilhado)
+- Colar em ms-x/config/consul
+- Criar arquivo ms-x/serviceRegister.js (exemplo em ms-shipping)
+- Em ms-x/index.js
+  - Importar const consul = require('consul');
+  - Importar const serviceRegister = require('./serviceRegister');
+  - Importar const consulRegistration = require('./config/consul/consul')(consul, serviceRegister);
+- Chamar consulRegistration.register(); após o server subir.
 
 ## Integrantes
 - Adler Coelho

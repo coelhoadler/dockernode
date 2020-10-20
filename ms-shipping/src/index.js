@@ -1,5 +1,4 @@
 const express = require('express');
-var bodyParser = require('body-parser')
 const cors = require('cors');
 const consul = require('consul');
 const serviceRegister = require('./serviceRegister');
@@ -11,7 +10,7 @@ app.use(express.json());
 app.use(cors());
 
 app.use(require('./routes'));
-const PORT = 3536;
+const PORT = process.env.PORT || 3535;
 
 server.listen(PORT, () => {
     consulRegistration.register();

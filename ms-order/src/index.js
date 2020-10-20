@@ -1,5 +1,4 @@
 const express = require('express');
-var bodyParser = require('body-parser')
 const cors = require('cors');
 const consul = require('consul');
 const serviceRegister = require('./serviceRegister');

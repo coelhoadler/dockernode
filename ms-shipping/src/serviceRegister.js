@@ -5,8 +5,13 @@ module.exports = {
     serviceId: 'ms-shipping',
     serviceNote: 'Shipping service',
     serviceTags: ['ship', 'shipping', 'amaz', 'microservice'],
-    serviceHealthCheckHost: process.env.HEALTHCHECK_HOST,
-    serviceHealthCheckPort: process.env.HEALTHCHECK_PORT,
+    serviceHost: process.env.SERVICE_HOST,
+    servicePort: process.env.SERVICE_PORT,
     consulHost: process.env.CONSUL_HOST,
-    consulPort: process.env.CONSUL_PORT
+    consulPort: process.env.CONSUL_PORT,
+    registerIntervalTry: 3000,
+    defaultsConfigurations: {
+        MsShipping: `http://${process.env.SERVICE_HOST}:${process.env.SERVICE_PORT}`,
+        ShippingCalculateUrl: process.env.ShippingCalculateUrl
+    }
 }

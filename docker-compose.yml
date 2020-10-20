@@ -17,21 +17,26 @@ services:
       - 3536:3536
     volumes:
       - ./ms-order:/usr/ms-order
+  shipping:
+    build:
+      context: ./ms-shipping
+    command: npm start
+    ports: 
+      - 3535:3535
+    volumes:
+      - ./ms-shipping:/usr/ms-shipping
   db:
     image: mysql
-    command: 
-        --default-authentication-plugin=mysql_native_password
-        --init-file /data/application/init.sql
+    command: --default-authentication-plugin=mysql_native_password
     ports:
         - 3306:3306
     restart: always
     environment:
-      MYSQL_ROOT_USER: root
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: amazondb
     volumes:
-        - ./db-volume/init.sql:/data/application/init.sql
+        - ./localdb:/var/lib/mysql
   adminer:
     image: adminer
     restart: always
