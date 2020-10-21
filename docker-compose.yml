@@ -2,7 +2,8 @@ version: "3.5"
 
 services:
   product:
-    image: acoeelho/case-amazon_product
+    build:
+      context: ./ms-product
     environment:
       NODE_PORT: 3001
     ports: 
@@ -12,7 +13,8 @@ services:
   order:
     build:
       context: ./ms-order
-    command: npm start
+    environment:
+      NODE_PORT: 3536
     ports: 
       - 3536:3536
     volumes:
@@ -20,13 +22,15 @@ services:
   shipping:
     build:
       context: ./ms-shipping
-    command: npm start
+    environment:
+      NODE_PORT: 3535
     ports: 
       - 3535:3535
     volumes:
       - ./ms-shipping:/usr/ms-shipping
   desk:
-    image: acoeelho/case-amazon_desk
+    build:
+      context: ./ms-desk
     environment:
       NODE_PORT: 3002
     ports: 
@@ -34,7 +38,8 @@ services:
     volumes:
       - ./ms-desk:/usr/ms-desk
   wishlist:
-    image: acoeelho/case-amazon_wishlist
+    build:
+      context: ./ms-wishlist
     environment:
       NODE_PORT: 3003
     ports: 
@@ -45,17 +50,15 @@ services:
     image: mysql
     command: 
         --default-authentication-plugin=mysql_native_password
-        --init-file /data/application/init.sql
     ports:
         - 3306:3306
     restart: always
     environment:
-      MYSQL_ROOT_USER: root
       MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: amazondb
     volumes:
-        - ./db-volume/init.sql:/data/application/init.sql
+        - ./localdb
   adminer:
     image: adminer
     restart: always

@@ -5,15 +5,16 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon -L ./src/index.js",
-    "start-product": "nodemon -L ./ms-product/src/index.js",
-    "start-order": "nodemon -L ./ms-order/src/index.js"
+    "start": "npm install && node ./src/index.js",
+    "dev": "nodemon -L ./src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "consul": "^0.39.0",
     "cors": "^2.8.5",
+    "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "mysql": "^2.18.1",
     "nodemon": "^2.0.4",
