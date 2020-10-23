@@ -10,4 +10,4 @@ COPY ./ ./
 
 EXPOSE ${NODE_PORT}
 
-CMD [ "http-server", "dist" ]
+CMD [ "npm", "start" ]

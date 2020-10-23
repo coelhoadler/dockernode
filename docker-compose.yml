@@ -81,6 +81,9 @@ services:
 #    volumes:
 #      - /var/run/docker.sock:/var/run/docker.sock
   swagger:
+    build:
+      context: ./swagger-ui-master
+    command: npm start
     environment:
       NODE_PORT: 8091
     ports: 
