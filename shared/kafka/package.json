@@ -4,7 +4,7 @@
   "description": "An example of Kafka consumer",
   "main": "index.js",
   "scripts": {
-    "start": "node consumer.js"
+    "start": "nodemon consumer.js"
   },
   "repository": {
     "type": "git",
@@ -18,5 +18,8 @@
   "homepage": "https://github.com/coelhoadler/dockernode#readme",
   "dependencies": {
     "kafka-node": "^5.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
   }
 }

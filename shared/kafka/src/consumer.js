@@ -5,13 +5,11 @@ const kafka = require('kafka-node');
   const kafkaClientOptions = { sessionTimeout: 0, spinDelay: 0, retries: 2 };
   const kafkaClient = new kafka.KafkaClient({kafkaHost: 'kafka:9092'}, kafkaClientOptions);
 
-  const topics = [
-    { 
+  const topics = [{ 
       topic: 'amazon-topic',
       offset: 0,
       partition: 0      
-    }
-  ];
+    }];
   
   const options = {
     autoCommit: true,
@@ -21,11 +19,20 @@ const kafka = require('kafka-node');
     commitOffsetsOnFirstJoin: true
   };
 
-  const kafkaConsumer = new kafka.Consumer(kafkaClient, topics, options);
-  kafkaConsumer.on('message', async function(message) {
+  const kafkaAmazonTopicConsumer = new kafka.Consumer(kafkaClient, topics, options);
+  kafkaAmazonTopicConsumer.on('message', async function(message) {
     console.log('>>> Message received:', message);
   });
-  
-  kafkaClient.on('error', (error) => console.error('Kafka client error:', error));
-  kafkaConsumer.on('error', (error) => console.error('Kafka consumer error:', error));
+
+  kafkaAmazonTopicConsumer.on('error', (error) => console.error('Kafka consumer error:', error));
+
+  // amazon_desk-topic
+  // const kafkaAmazonTopicConsumer = new kafka.Consumer(kafkaClient, topics[1], options);
+  // kafkaAmazonTopicConsumer.on('message', async function(message) {
+  //   console.log('>>> Message received:', JSON.parse(message));
+  // });
+
+  // kafkaAmazonTopicConsumer.on('error', (error) => console.error('Kafka consumer error:', error));  
+
+  kafkaClient.on('error', (error) => console.error('Kafka client error:', error));  
 })();

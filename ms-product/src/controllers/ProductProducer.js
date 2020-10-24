@@ -1,7 +1,7 @@
 const kafka = require('kafka-node');
 
 module.exports = {
-    sendToKafka: () => {
+    sendToKafka: (results) => {
         const kafkaClientOptions = { sessionTimeout: 0, spinDelay: 0, retries: 2 };
         const kafkaClient = new kafka.KafkaClient({kafkaHost: 'kafka:9092'}, kafkaClientOptions);
         const kafkaProducer = new kafka.Producer(kafkaClient);
@@ -11,12 +11,12 @@ module.exports = {
 
         const payload = [{
             topic: 'amazon-topic',
-            messages: '[SEND PAYLOAD TO KAFKA BROKER]',
+            messages: JSON.stringify(results),
             attributes: 1
         }];
 
         kafkaProducer.send(payload, function (error, result) {
-            console.info('Sent payload to Kafka:', payload);
+            console.info(`Sent payload to amazon-topic on Kafka:`);
             if (error) {
                 console.error('Sending payload failed:', error);
             } else {

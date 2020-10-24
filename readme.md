@@ -37,11 +37,11 @@ solução baseada em Microserviços.__
 - Mysql
 - Mysql Workbench
 - Consul
-- Kafka
+- Kafka Node
 
 ### Na sua implementação deve ser utilizado: 
 - [x] um banco de dados relacional (mysql ou postgree);
-- [ ] um serviço de mensageria, por exemplo Apache Kafka;
+- [x] um serviço de mensageria, por exemplo Apache Kafka;
 - [x] Integração com api de CEP;
 - [x] um serviço de gerenciamento de configurações; (Consul)
 
@@ -96,8 +96,6 @@ solução baseada em Microserviços.__
   ```
 - Criar rota '/health' e apontar para o HealthCheckController.js 
   
-
-
 ## Integrantes
 - Adler Coelho
 - Beatriz Bafini

@@ -23,7 +23,9 @@ services:
       - zookeeper
     environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_CREATE_TOPICS: "amazon-topic:1:1"
+      KAFKA_CREATE_TOPICS: |
+        amazon-topic:1:1
+        amazon_desk-topic:1:1      
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
