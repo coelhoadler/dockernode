@@ -1,8 +1,9 @@
 const conn = require('../config/db');
-
 const knex = require('knex')({
     client: "mysql"
 });
+
+const productProducer = require('./ProductProducer');
 
 module.exports = {
     async index(req, res) {
@@ -11,12 +12,13 @@ module.exports = {
         const query = knex('Product')
             .where('ProductId', productId);
 
-        conn.query(query.toString, (error, results, fields) => {
+        conn.query(query.toString(), (error, results, fields) => {
             if (error) {
                 return res.status(500).json({
                    error
                 });
             } else {
+                productProducer.sendToKafka(results);
                 if (results.length > 0) {
                     return res.status(200).json({
                         length: results.length,

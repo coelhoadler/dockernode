@@ -1,64 +1,6 @@
 version: "3.5"
 
 services:
-  product:
-    build:
-      context: ./ms-product
-    environment:
-      NODE_PORT: 3001
-    ports: 
-      - 3001:3001
-    volumes:
-      - ./ms-product:/usr/ms-product
-  order:
-    build:
-      context: ./ms-order
-    environment:
-      NODE_PORT: 3536
-    ports: 
-      - 3536:3536
-    volumes:
-      - ./ms-order:/usr/ms-order
-  shipping:
-    build:
-      context: ./ms-shipping
-    environment:
-      NODE_PORT: 3535
-    ports: 
-      - 3535:3535
-    volumes:
-      - ./ms-shipping:/usr/ms-shipping
-  desk:
-    build:
-      context: ./ms-desk
-    environment:
-      NODE_PORT: 3002
-    ports: 
-      - 3002:3002
-    volumes:
-      - ./ms-desk:/usr/ms-desk
-  wishlist:
-    build:
-      context: ./ms-wishlist
-    environment:
-      NODE_PORT: 3003
-    ports: 
-      - 3003:3003
-    volumes:
-      - ./ms-wishlist:/usr/ms-wishlist
-  db:
-    image: mysql
-    command: 
-        --default-authentication-plugin=mysql_native_password
-    ports:
-        - 3306:3306
-    restart: always
-    environment:
-      MYSQL_USER: root
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: amazondb
-    volumes:
-        - ./localdb
   adminer:
     image: adminer
     restart: always
@@ -76,10 +18,102 @@ services:
   kafka:
     image: wurstmeister/kafka
     ports:
-      - "9092:9092"
+      - 9092:9092
+    depends_on:
+      - zookeeper
     environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
-      KAFKA_CREATE_TOPICS: "test:1:1"
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_CREATE_TOPICS: "amazon-topic:1:1,amazon_desk-topic:1:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
+  consumer:
+    build: ./shared/kafka
+    container_name: case-amazon_consumer
+    command: sh -c "dockerize -wait tcp://zookeeper:2181 -wait tcp://kafka:9092 npm start"
+    depends_on:
+      - kafka
+      - zookeeper
+      - db      
+  product:
+    build: ./ms-product
+    container_name: case-amazon_product
+    depends_on:
+      - zookeeper
+      - kafka
+      - db
+    command: sh -c "dockerize -wait tcp://host.docker.internal:2181 -wait tcp://host.docker.internal:9092 npm start"
+    environment:
+      NODE_PORT: 3001
+    ports: 
+      - 3001:3001
+    volumes:
+      - ./ms-product:/usr/ms-product
+  order:
+    build: ./ms-order
+    container_name: case-amazon_order
+    depends_on:
+      - zookeeper
+      - kafka
+      - db      
+    environment:
+      NODE_PORT: 3536
+    ports: 
+      - 3536:3536
+    volumes:
+      - ./ms-order:/usr/ms-order
+  shipping:
+    build: ./ms-shipping
+    container_name: case-amazon_shipping
+    depends_on:
+      - zookeeper
+      - kafka
+      - db      
+    environment:
+      NODE_PORT: 3535
+    ports: 
+      - 3535:3535
+    volumes:
+      - ./ms-shipping:/usr/ms-shipping
+  desk:
+    build: ./ms-desk
+    container_name: case-amazon_desk
+    depends_on:
+      - zookeeper
+      - kafka
+      - db
+    command: sh -c "dockerize -wait tcp://zookeeper:2181 -wait tcp://kafka:9092 npm start"
+    environment:
+      NODE_PORT: 3002
+    ports: 
+      - 3002:3002
+    volumes:
+      - ./ms-desk:/usr/ms-desk
+  wishlist:
+    build: ./ms-wishlist
+    container_name: case-amazon_wish
+    depends_on:
+      - zookeeper
+      - kafka
+      - db      
+    environment:
+      NODE_PORT: 3003
+    ports: 
+      - 3003:3003
+    volumes:
+      - ./ms-wishlist:/usr/ms-wishlist      
+  db:
+    image: mysql
+    command: 
+        --default-authentication-plugin=mysql_native_password
+        --init-file /data/application/init.sql        
+    ports:
+        - 3306:3306
+    restart: always
+    environment:
+      MYSQL_USER: root
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_PASSWORD: root
+      MYSQL_DATABASE: amazondb
+    volumes:
+        - ./db-volume/init.sql:/data/application/init.sql
