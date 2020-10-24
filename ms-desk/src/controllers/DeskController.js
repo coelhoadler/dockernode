@@ -22,10 +22,7 @@ async function index(req, res) {
 }
 
 async function create(req, res) {
-    const userId = req.query.userId;
-    const deskDesc = req.query.deskDesc;
-    const deskDate = req.query.deskDate;
-
+    const { userId, deskDesc, deskDate } = req.query;
     conn.query(`INSERT INTO Desk (UserId, DeskDesc, DeskDate) VALUE ('${userId}', '${deskDesc}', '${deskDate}')`, (error, results, fields) => {
         if (error) {
             return res.status(500).json({

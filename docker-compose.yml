@@ -1,46 +1,35 @@
-version: "3.5"
+version: "3"
 
 services:
+  zookeeper:
+    image: wurstmeister/zookeeper
+    ports:
+      - "2181:2181"
+  kafka:
+    image: wurstmeister/kafka
+    ports:
+      - 9092:9092
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ADVERTISED_HOST_NAME: kafka
+      KAFKA_CREATE_TOPICS: "amazon-topic:1:1"
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock  
   product:
     image: acoeelho/case-amazon_product
+    depends_on:
+      - zookeeper
+      - kafka
+      - db
+    command: sh -c "dockerize -wait tcp://host.docker.internal:2181 -wait tcp://host.docker.internal:9092 npm start"
     environment:
       NODE_PORT: 3001
     ports: 
       - 3001:3001
     volumes:
       - ./ms-product:/usr/ms-product
-  order:
-    build:
-      context: ./ms-order
-    command: npm start
-    ports: 
-      - 3536:3536
-    volumes:
-      - ./ms-order:/usr/ms-order
-  shipping:
-    build:
-      context: ./ms-shipping
-    command: npm start
-    ports: 
-      - 3535:3535
-    volumes:
-      - ./ms-shipping:/usr/ms-shipping
-  desk:
-    image: acoeelho/case-amazon_desk
-    environment:
-      NODE_PORT: 3002
-    ports: 
-      - 3002:3002
-    volumes:
-      - ./ms-desk:/usr/ms-desk
-  wishlist:
-    image: acoeelho/case-amazon_wishlist
-    environment:
-      NODE_PORT: 3003
-    ports: 
-      - 3003:3003
-    volumes:
-      - ./ms-wishlist:/usr/ms-wishlist
   db:
     image: mysql
     command: 
@@ -56,27 +45,3 @@ services:
       MYSQL_PASSWORD: root
     volumes:
         - ./db-volume/init.sql:/data/application/init.sql
-  adminer:
-    image: adminer
-    restart: always
-    ports:
-      - 8080:8080
-  consul:
-    image: consul
-    restart: always
-    ports:
-      - 8500:8500
-  zookeeper:
-    image: wurstmeister/zookeeper
-    ports:
-      - "2181:2181"
-  kafka:
-    image: wurstmeister/kafka
-    ports:
-      - "9092:9092"
-    environment:
-      KAFKA_ADVERTISED_HOST_NAME: localhost
-      KAFKA_CREATE_TOPICS: "test:1:1"
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-    volumes:
-      - /var/run/docker.sock:/var/run/docker.sock
