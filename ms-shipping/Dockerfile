@@ -6,8 +6,8 @@ COPY package*.json ./
 
 RUN npm install
 
-COPY ./ ./
+COPY . .
 
-EXPOSE 3535
+EXPOSE ${NODE_PORT}
 
 CMD [ "npm", "start" ]
