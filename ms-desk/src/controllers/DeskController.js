@@ -11,7 +11,7 @@ async function index(req, res) {
             if (results.length > 0) {
                 return res.status(200).json({
                     length: results.length,
-                    wishes: results
+                    desks: results
                 });
             } else {
                 return res.status(404).json({
