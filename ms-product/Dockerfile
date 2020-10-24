@@ -21,7 +21,7 @@ RUN apk add --no-cache --virtual .gyp \
     && npm install \
     && apk del .gyp
 
-COPY ./ ./
+COPY . .
 
 EXPOSE ${NODE_PORT}
 

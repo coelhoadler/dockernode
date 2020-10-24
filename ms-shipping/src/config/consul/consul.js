@@ -23,7 +23,6 @@ module.exports = (consul, { serviceName, serviceId, serviceNote, serviceTags, se
             address: `http://${serviceHost}`, //endereço do microserviço que está se registrando 
             port: ~~(servicePort), //porta do microserviço que está se registrando 
             check: {
-                deregisterCriticalServiceAfter: "60s", // desregistrar? do serviço após x seg de inatividade 
                 http: `http://${serviceHost}:${servicePort}/health`, // url de checagem de "saúde" do serviço
                 interval: '30s',
                 timeout: '5s',
