@@ -10,7 +10,7 @@ RUN apk add --no-cache openssl \
     && rm dockerize-alpine-linux-amd64-$DOCKERIZE_VERSION.tar.gz
 
 # Installing bash.
-RUN apk add --no-cache bash bash-doc bash-completion    
+RUN apk add --no-cache bash bash-doc bash-completion
 
 COPY package*.json ./
 

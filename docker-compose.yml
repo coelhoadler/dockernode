@@ -23,9 +23,7 @@ services:
       - zookeeper
     environment:
       KAFKA_ADVERTISED_HOST_NAME: kafka
-      KAFKA_CREATE_TOPICS: |
-        amazon-topic:1:1
-        amazon_desk-topic:1:1      
+      KAFKA_CREATE_TOPICS: "amazon-topic:1:1,amazon_desk-topic:1:1"
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
@@ -38,7 +36,8 @@ services:
       - zookeeper
       - db      
   product:
-    image: acoeelho/case-amazon_product
+    build: ./ms-product
+    container_name: case-amazon_product
     depends_on:
       - zookeeper
       - kafka
@@ -51,7 +50,8 @@ services:
     volumes:
       - ./ms-product:/usr/ms-product
   order:
-    image: acoeelho/case-amazon_order
+    build: ./ms-order
+    container_name: case-amazon_order
     depends_on:
       - zookeeper
       - kafka
@@ -63,7 +63,8 @@ services:
     volumes:
       - ./ms-order:/usr/ms-order
   shipping:
-    image: acoeelho/case-amazon_shipping
+    build: ./ms-shipping
+    container_name: case-amazon_shipping
     depends_on:
       - zookeeper
       - kafka
@@ -75,11 +76,13 @@ services:
     volumes:
       - ./ms-shipping:/usr/ms-shipping
   desk:
-    image: acoeelho/case-amazon_desk      
+    build: ./ms-desk
+    container_name: case-amazon_desk
     depends_on:
       - zookeeper
       - kafka
-      - db      
+      - db
+    command: sh -c "dockerize -wait tcp://zookeeper:2181 -wait tcp://kafka:9092 npm start"
     environment:
       NODE_PORT: 3002
     ports: 
@@ -87,7 +90,8 @@ services:
     volumes:
       - ./ms-desk:/usr/ms-desk
   wishlist:
-    image: acoeelho/case-amazon_wishlist
+    build: ./ms-wishlist
+    container_name: case-amazon_wish
     depends_on:
       - zookeeper
       - kafka

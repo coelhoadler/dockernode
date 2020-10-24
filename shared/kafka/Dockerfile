@@ -1,4 +1,4 @@
-FROM node:10.9-alpine
+FROM node:alpine
 
 WORKDIR /src
 
@@ -20,3 +20,5 @@ RUN apk add --no-cache --virtual .gyp \
     && apk del .gyp
 
 COPY ./src /src/
+
+CMD [ "npm", "start" ]
