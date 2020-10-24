@@ -1,20 +1,16 @@
 const express = require('express');
 const cors = require('cors');
-const consul = require('consul');
-const serviceRegister = require('./serviceRegister');
-const consulRegistration = require('./config/consul/consul')(consul, serviceRegister);
 const app = express();
 const server = require('http').Server(app);
+const serviceRegister = require('./config/consul/serviceRegister');
 
 app.use(express.json());
 app.use(cors());
 
 app.use(require('./routes'));
-const PORT = 3536;
+const PORT = process.env.NODE_PORT;
 
 server.listen(PORT, () => {
-    consulRegistration.register();
+    serviceRegister.register();
     console.log(`Listening open: ${PORT}`);
 });
-
-    

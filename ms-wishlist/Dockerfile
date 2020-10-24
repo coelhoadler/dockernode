@@ -1,6 +1,6 @@
 FROM node:alpine
 
-WORKDIR /usr/app
+WORKDIR /usr/ms-wishlist
 
 COPY package*.json ./
 

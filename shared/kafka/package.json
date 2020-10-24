@@ -1,0 +1,26 @@
+{
+  "name": "case-amazon_consumer",
+  "version": "1.0.0",
+  "description": "An example of Kafka consumer",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon consumer.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/coelhoadler/dockernode.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/coelhoadler/dockernode/issues"
+  },
+  "homepage": "https://github.com/coelhoadler/dockernode#readme",
+  "dependencies": {
+    "kafka-node": "^5.0.0",
+    "mysql": "^2.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.6"
+  }
+}
