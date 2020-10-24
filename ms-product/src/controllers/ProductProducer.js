@@ -2,9 +2,8 @@ const kafka = require('kafka-node');
 
 module.exports = {
     sendToKafka: () => {
-        console.log('>>> Emitindo pro Kafka >>>');
-        const kafkaClientOptions = { sessionTimeout: 100, spinDelay: 100, retries: 2 };
-        const kafkaClient = new kafka.KafkaClient({kafkaHost: 'host.docker.internal:9092'}, kafkaClientOptions);
+        const kafkaClientOptions = { sessionTimeout: 0, spinDelay: 0, retries: 2 };
+        const kafkaClient = new kafka.KafkaClient({kafkaHost: 'kafka:9092'}, kafkaClientOptions);
         const kafkaProducer = new kafka.Producer(kafkaClient);
 
         kafkaClient.on('error', (error) => console.error('Kafka client error:', error));
@@ -20,10 +19,8 @@ module.exports = {
             console.info('Sent payload to Kafka:', payload);
             if (error) {
                 console.error('Sending payload failed:', error);
-                // res.status(500).json(error);
             } else {
                 console.log('Sending payload result:', result);
-                // res.status(202).json(result);
             }
         });
     }

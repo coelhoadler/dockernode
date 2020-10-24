@@ -1,43 +1,29 @@
-const moment = require('moment');
-const uuidv4 = require('uuid/v4');
 const kafka = require('kafka-node');
-const { Client: PgClient } = require('pg');
-const type = require('./type');
 
 (async () => {
-  const pgClient = new PgClient();
-  await pgClient.connect();
 
-  const kafkaClientOptions = { sessionTimeout: 100, spinDelay: 100, retries: 2 };
-  const kafkaClient = new kafka.Client(process.env.KAFKA_ZOOKEEPER_CONNECT, 'consumer-client', kafkaClientOptions);
-  
+  const kafkaClientOptions = { sessionTimeout: 0, spinDelay: 0, retries: 2 };
+  const kafkaClient = new kafka.KafkaClient({kafkaHost: 'kafka:9092'}, kafkaClientOptions);
+
   const topics = [
-    { topic: 'sales-topic' }
+    { 
+      topic: 'amazon-topic',
+      offset: 0,
+      partition: 0      
+    }
   ];
   
   const options = {
     autoCommit: true,
     fetchMaxWaitMs: 1000,
     fetchMaxBytes: 1024 * 1024,
-    encoding: 'buffer'
+    encoding: 'utf8',
+    commitOffsetsOnFirstJoin: true
   };
-  
-  const kafkaConsumer = new kafka.HighLevelConsumer(kafkaClient, topics, options);
-  
+
+  const kafkaConsumer = new kafka.Consumer(kafkaClient, topics, options);
   kafkaConsumer.on('message', async function(message) {
-    console.log('Message received:', message);
-    const messageBuffer = new Buffer(message.value, 'binary');
-
-    const decodedMessage = type.fromBuffer(messageBuffer.slice(0));
-    console.log('Decoded Message:', typeof decodedMessage, decodedMessage);
-
-    const saleDateISO8601 = moment(decodedMessage.saleDate).toISOString();
-    const insertResponse = await pgClient.query({
-      text: 'INSERT INTO sales(uuid, total, sale_date) VALUES($1, $2, $3)',
-      values: [uuidv4(), decodedMessage.total, saleDateISO8601],
-    });
-
-    console.log('Insert Response:', insertResponse);
+    console.log('>>> Message received:', message);
   });
   
   kafkaClient.on('error', (error) => console.error('Kafka client error:', error));
