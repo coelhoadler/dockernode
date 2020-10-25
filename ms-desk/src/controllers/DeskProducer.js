@@ -5,13 +5,14 @@ module.exports = {
         const kafkaClientOptions = { sessionTimeout: 0, spinDelay: 0, retries: 2 };
         const kafkaClient = new kafka.KafkaClient({ kafkaHost: 'kafka:9092' }, kafkaClientOptions);
         const kafkaProducer = new kafka.Producer(kafkaClient);
+        const KeyedMessage = kafka.KeyedMessage;
 
         kafkaClient.on('error', (error) => console.error('Kafka client error:', error));
         kafkaProducer.on('error', (error) => console.error('Kafka producer error:', error));
 
         const payload = [{
             topic: 'amazon_desk-topic',
-            messages: deskObj,
+            messages: new KeyedMessage('deskObj', deskObj),
             attributes: 1
         }];
 
