@@ -16,7 +16,7 @@ const conn = require('./config/db');
     autoCommit: true,
     fetchMaxWaitMs: 1000,
     fetchMaxBytes: 1024 * 1024,
-    encoding: 'buffer',
+    encoding: 'utf8',
     commitOffsetsOnFirstJoin: true
   };
 
@@ -37,12 +37,10 @@ const conn = require('./config/db');
 
   const kafkaAmazonDeskTopicConsumer = new kafka.Consumer(kafkaClient, amazon_desk_topic, options);
   kafkaAmazonDeskTopicConsumer.on('message', async function (deskObj) {
-    console.log('Message received', deskObj);
-    // const { userId, deskDesc, deskDate } = deskObj.value;
-
-    conn.query(`INSERT INTO Desk (UserId, DeskDesc, DeskDate) VALUE (1, 'Test kafka listner', NOW())`, (error, results, fields) => {
+    const [ userId, deskDesc, deskDate ] = deskObj.value.split('|');
+    conn.query(`INSERT INTO Desk (UserId, DeskDesc, DeskDate) VALUE (${Number(userId)}, '${deskDesc}', '${deskDate}')`, (error, results, fields) => {
         if (error) {
-          console.log(`Error on insert in Desk table.`);
+          console.log(`Error on insert in Desk table.`, error);
         } else {
           console.log(`Inserted in Desk table`);
         }

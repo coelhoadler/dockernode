@@ -108,7 +108,7 @@ services:
         --default-authentication-plugin=mysql_native_password
         --init-file /data/application/init.sql        
     ports:
-        - 3306:3306
+        - 3306
     restart: always
     environment:
       MYSQL_USER: root
@@ -118,8 +118,8 @@ services:
     volumes:
         - ./db-volume/init.sql:/data/application/init.sql
   swagger:
-    build:
-      context: ./swagger-ui-master
+    build: ./swagger-ui-master
+    container_name: case-amazon_swagger
     command: npm start
     environment:
       NODE_PORT: 8091
