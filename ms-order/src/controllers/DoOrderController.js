@@ -7,10 +7,11 @@ const knex = require('knex')({
 module.exports = {
     async store(req, res) {
 
-        const { userId, productsIds } = req.body;
+        const { userId, productsIds } = req.query;
 
         const productsQuery = knex('Product')
-            .whereIn('ProductId', productsIds);
+            .whereIn('ProductId', productsIds.split(','));
+
         conn.query(productsQuery.toQuery(), (error, products) => {
 
             const prices = products.map(_ => _.ProductPrice);
@@ -24,18 +25,34 @@ module.exports = {
 
             conn.query(orderQuery.toQuery(), (error, order, fields) => {
 
-                const orderProducts = [];
-                for (productId of productsIds) {
-                    orderProducts.push({
-                        OrderId: order.insertId,
-                        ProductId: productId
+                if (error) {
+                    return res.status(500).json({
+                        error
+                    });
+                } else {
+                    const orderProducts = [];
+                    for (productId of productsIds) {
+                        orderProducts.push({
+                            OrderId: order.insertId,
+                            ProductId: productId
+                        });
+                    }
+                    console.log(orderProducts);
+                    const query = knex('OrderProduct').insert(orderProducts);
+                    conn.query(query.toQuery(), (error2, orderProduct) => {
+                        if (error) {
+                            return res.status(500).json({
+                                error2
+                            });
+                        } else {
+                            return res.status(200).json({
+                                message: 'Order successfully sent.',
+                                orders: orderProducts
+                            });
+                        }
                     });
                 }
-                console.log(orderProducts);
-                const query = knex('OrderProduct').insert(orderProducts);
-                conn.query(query.toQuery(), (error, orderProduct) => {
-                    return res.json(orderProducts);
-                });
+
             });
         });
     }

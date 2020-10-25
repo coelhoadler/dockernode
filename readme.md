@@ -1,35 +1,34 @@
 Case Amazon
 ---
-__Suponho que você seja contratado para desenvolver algunas funcionalidades do e-commerce da
+__Suponha que você seja contratado para desenvolver algunas funcionalidades do e-commerce da
 Amazon, alguns desejos dos usuários são descritos abaixo e você deve desenhar e implementar uma
 solução baseada em Microserviços.__
-  
-- MSA
-  - ms product
-    - Adler
-        - [x] Possibilidade de visualizar os produtos de um determinado gênero; ex (GET products/:category)
-        - [x] Possibilidade de visualizar os detalhes de cada produto; ex (GET product/:productId)
 
-  - ms wishlist 
-    - Bea
-        - [x] Possibilidade de adicionar itens na sua lista de desejo; ex (POST /wishes)
-  - ms desk
-    - Bea
-        - [x] Possibilidade de abrir um chamado técnico de algum problema que está acontecendo;
+## Integrantes
+- Adler Coelho
+- Beatriz Bafini
+- Kelvin Marques
+- Michel Santana
 
-  - ms search
-    - Kelvin
-        - [x] Possibilidade de buscar um produto por palavra-chave; ex (GET products/search?keyWord=Smart Tv)
-        - [x] Possibilidade de exibir os produtos mais vistos por categorias; (GET products/search?mostSeen=true)
-        - Nota: Os parâmetros "productPrice", "productAmount" e "limit" também são aceitos com valor numérico.
-
-  - ms shipping (antigo ms tax)
-    - Michel
-        - [x] Possibilidade de calcular o frete de uma compra;  
-  - ms order | [x] MySQL | [x] Consul | [ ] Kafka
-    - Michel
-        - [x] Possibilidade de acompanhar os dados do seu pedido;
-        - [x] Possibilidade de fazer um pedido; (extra)
+## Pendências
+- Adler
+    - [x] Possibilidade de visualizar os produtos de um determinado gênero (ms product);
+    - [x] Possibilidade de visualizar os detalhes de cada produto (ms product);
+    - [ ] Kafka
+- Bea
+    - [x] Possibilidade de adicionar itens na sua lista de desejo (ms wishlist);
+    - [x] Possibilidade de abrir um chamado técnico de algum problema que está acontecendo (ms desk);
+- Kelvin
+    - [x] Possibilidade de buscar um produto por palavra-chave (ms product);
+    - [x] Possibilidade de exibir os produtos mais vistos por categorias (ms product);
+    - [x] Documentação da API no Swagger (swagger-ui-master);
+    - [x] Documentação da API no Postman;
+- Michel
+    - [x] Possibilidade de calcular o frete de uma compra (ms shipping);
+    - [x] Possibilidade de acompanhar os dados do seu pedido (ms order);
+    - [x] Possibilidade de fazer um pedido (ms order);
+    - [x] Consul
+    - [x] MySql
 
 ## Tecnologias usadas
 - NodeJs
@@ -38,6 +37,10 @@ solução baseada em Microserviços.__
 - Mysql Workbench
 - Consul
 - Kafka Node
+
+## Documentação da API
+- Ao subir a aplicação, uma documentação da API em Swagger pode ser encontrada em `localhost:8091`.
+- Há uma collection do Postman para testes na raíz do projeto: `api.postman_collection.json`
 
 ### Na sua implementação deve ser utilizado: 
 - [x] um banco de dados relacional (mysql ou postgree);
@@ -95,9 +98,3 @@ solução baseada em Microserviços.__
   }
   ```
 - Criar rota '/health' e apontar para o HealthCheckController.js 
-  
-## Integrantes
-- Adler Coelho
-- Beatriz Bafini
-- Kelvin Marques
-- Michel Santana

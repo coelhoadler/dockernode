@@ -15,7 +15,8 @@ async function index(req, res) {
                 });
             } else {
                 return res.status(404).json({
-                    message: `No desks yet.`
+                    message: `No desks yet.`,
+                    desks: []
                 });                    
             }
         }
