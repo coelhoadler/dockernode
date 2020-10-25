@@ -10,7 +10,28 @@ solução baseada em Microserviços.__
 - Kelvin Marques
 - Michel Santana
 
-## Pendências
+## Subindo a aplicação
+   - clone o atual repositório: `git clone https://github.com/coelhoadler/dockernode.git `;
+   - certifique-se que você tenha o __Docker__ e o __docker-compose__ instalados corretamente no seu ambiente;
+   - na raíz do projeto, execute: `docker-compose up`.
+   
+### Identificação dos Microservices
+  | Nome do Microservice    | Porta        | Descrição        |
+  |-------------------------|--------------|------------------|
+  | adminer                 | 8080         | Plataforma de gerenciamento do banco mysql. |
+  | db (mysql)              | 3306         | Banco de dados relacional.                  |
+  | consul                  | 8500         | Gerenciador de configurações.               |
+  | zookeeper               | 2181         | Service Discovery.                          |
+  | kafka                   | 9092         | Plataforma distribuída.                     |
+  | consumer                | ----         | MS de consumer.                             |
+  | product                 | 3001         | MS de product.                              |
+  | order                   | 3536         | MS de order.                                |
+  | shipping                | 3535         | MS de shipping.                             |
+  | desk                    | 3002         | MS de desk.                                 |
+  | wishlist                | 3003         | MS de wishlist.                             |
+  | swagger                 | 8091         | Swagger UI                                  |
+  
+## O que foi feito?
 - Adler
     - [x] Possibilidade de visualizar os produtos de um determinado gênero (ms product);
     - [x] Possibilidade de visualizar os detalhes de cada produto (ms product);
@@ -37,6 +58,7 @@ solução baseada em Microserviços.__
 - Mysql Workbench
 - Consul
 - Kafka Node
+- Swagger UI
 
 ## Documentação da API
 - Ao subir a aplicação, uma documentação da API em Swagger pode ser encontrada em `localhost:8091`.
