@@ -42,13 +42,13 @@ solução baseada em Microserviços.__
 - Ao subir a aplicação, uma documentação da API em Swagger pode ser encontrada em `localhost:8091`.
 - Há uma collection do Postman para testes na raíz do projeto: `api.postman_collection.json`
 
-### Na sua implementação deve ser utilizado: 
+## Requisitos atendidos
 - [x] um banco de dados relacional (mysql ou postgree);
 - [x] um serviço de mensageria, por exemplo Apache Kafka;
 - [x] Integração com api de CEP;
 - [x] um serviço de gerenciamento de configurações; (Consul)
 
-### Implementar Consul no seu ms
+## Implementar Consul no seu ms
 - Acessar a pasta do ms-x `$ cd ms-x`
 - Instalar consul `$ npm install consul`
 - Instalar dotenv `$ npm install dotenv`
