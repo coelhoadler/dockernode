@@ -15,7 +15,8 @@ async function index(req, res) {
                 });
             } else {
                 return res.status(404).json({
-                    message: `User doesn't have wish list.`
+                    message: `User doesn't have wish list.`,
+                    wishes: []
                 });                    
             }
         }
@@ -33,7 +34,7 @@ async function create(req, res) {
             });
         } else {
             return res.status(200).json({
-                message: `Product added in your wish list.`
+                message: `Product added to your wish list.`
             });
         }
     });

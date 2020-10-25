@@ -1,0 +1,869 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "description": "Esta documentação é referente à aplicação desenvolvida como TDC da disciplina de SERVICES ARCHITECTURE / API / MOBILE ARCHITECTURE do professor TADEU D’ALESSANDRO BARBOSA do MBA de SOFTWARE ENGINEERING da FIAP.\n\nAno: 2020\n\nTurma: 75AOJ\n\nIntegrantes:\n- Adler Coelho\n- Beatriz Bafini\n- Kelvin Marques\n- Michel Santana",
+        "version": "1.0.0",
+        "title": "Case Amazon",
+        "termsOfService": "",
+        "contact": {
+            "email": ""
+        }
+    },
+    "tags": [
+        {
+            "name": "product",
+            "description": "Tudo em produtos"
+        },
+        {
+            "name": "desk",
+            "description": "Tudo em chamados"
+        },
+        {
+            "name": "wishlist",
+            "description": "Tudo em lista de desejos"
+        },
+        {
+            "name": "order",
+            "description": "Tudo em pedidos"
+        },
+        {
+            "name": "shipping",
+            "description": "Tudo em endereços de entrega"
+        }
+    ],
+    "paths": {
+        "/localhost:3001/product/{productId}": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "busca um produto por id",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "productId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "id do produto"
+                    }
+                ],
+                "operationId": "getProductById",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Product"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Product was not found."
+                                            ]
+                                        },
+                                        "products": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/localhost:3001/product/{category}": {
+            "get": {
+                "tags": [
+                    "product"
+                ],
+                "summary": "busca produtos por categoria",
+                "description": "",
+                "operationId": "getProductsByCategory",
+                "parameters": [
+                    {
+                        "name": "category",
+                        "in": "path",
+                        "description": "categoria do produto",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "format": "int64"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductList"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Category \"{category}\" was not found."
+                                            ]
+                                        },
+                                        "products": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "security": []
+            }
+        },
+        "/localhost:3001/products": {
+            "get": {
+                "summary": "busca produtos por características/parâmetros",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "productPrice",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "preço do produto"
+                    },
+                    {
+                        "name": "productAmount",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "quantidade do produto em estoque"
+                    },
+                    {
+                        "name": "keyWord",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "palavra chave: itera sobre a descrição e o nome dos produtos"
+                    },
+                    {
+                        "name": "mostSeen",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "se verdadeiro, ordena os produtos retornados por ordem dos mais vistos"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "quantidade máxima de produtos a serem retornados"
+                    }
+                ],
+                "operationId": "getProductSearch",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/ProductList"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "No products found for the searching params."
+                                            ]
+                                        },
+                                        "products": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "product"
+                ]
+            }
+        },
+        "/localhost:3002/desk": {
+            "post": {
+                "summary": "cadastra um chamado",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "required": false,
+                        "schema": {},
+                        "description": "Id do usuário"
+                    },
+                    {
+                        "name": "deskDesc",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Descrição do chamado"
+                    },
+                    {
+                        "name": "deskDate",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "Data do chamado"
+                    }
+                ],
+                "operationId": "postDesk",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Desk added successfully."
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "desk"
+                ]
+            },
+            "get": {
+                "summary": "retorna todos os chamados",
+                "description": "",
+                "parameters": [],
+                "operationId": "getDesks",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/DeskList"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "No desks yet."
+                                            ]
+                                        },
+                                        "desks": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "desk"
+                ]
+            }
+        },
+        "/localhost:3003/wishes/{userId}": {
+            "get": {
+                "summary": "retorna a lista de desejos do usuário",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "id do usuário"
+                    }
+                ],
+                "operationId": "getUserWishes",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/WishList"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "User doesn't have wish list."
+                                            ]
+                                        },
+                                        "wishes": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "wishlist"
+                ]
+            }
+        },
+        "/localhost:3003/wishes": {
+            "post": {
+                "summary": "cadastra uma produto na lista de desejos de um usuário",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "id do usuário"
+                    },
+                    {
+                        "name": "productId",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "id do produto"
+                    }
+                ],
+                "operationId": "postWish",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Product added to your wish list."
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Unprocessable Entity",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "User already liked this product."
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "wishlist"
+                ]
+            }
+        },
+        "/localhost:3536/orders/{userId}": {
+            "get": {
+                "summary": "retorna todos os pedidos do usuário",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "id do usuário"
+                    }
+                ],
+                "operationId": "getUserOrders",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/OrderList"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "User has no orders."
+                                            ]
+                                        },
+                                        "orders": {
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "order"
+                ]
+            }
+        },
+        "/localhost:3536/order/do-order": {
+            "post": {
+                "summary": "cadastra um pedido",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "id do usuário"
+                    },
+                    {
+                        "name": "productsIds",
+                        "in": "query",
+                        "required": false,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "integer",
+                                "minimum": "1"
+                            }
+                        },
+                        "description": "ids dos produtos do pedido",
+                        "uniqueItems": true
+                    }
+                ],
+                "operationId": "postOrder",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "Order successfully sent."
+                                            ]
+                                        },
+                                        "orders": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "object",
+                                                "properties": {
+                                                    "OrderId": {
+                                                        "type": "integer"
+                                                    },
+                                                    "ProductId": {
+                                                        "type": "string"
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "order"
+                ]
+            }
+        },
+        "/localhost:3535/shipping/{userId}": {
+            "get": {
+                "summary": "retorna os dados de endereço por cep do usuário",
+                "description": "",
+                "parameters": [
+                    {
+                        "name": "userId",
+                        "in": "path",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "description": "id do usuário"
+                    }
+                ],
+                "operationId": "",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Shipping"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Not Found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "enum": [
+                                                "User not found."
+                                            ]
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "tags": [
+                    "shipping"
+                ]
+            }
+        }
+    },
+    "servers": [
+        {
+            "url": "/"
+        }
+    ],
+    "components": {
+        "requestBodies": {},
+        "securitySchemes": {},
+        "schemas": {
+            "DeskList": {
+                "type": "object",
+                "properties": {
+                    "length": {
+                        "type": "integer"
+                    },
+                    "desks": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "DeskId": {
+                                    "type": "integer"
+                                },
+                                "UserId": {
+                                    "type": "integer"
+                                },
+                                "DeskDesc": {
+                                    "type": "string"
+                                },
+                                "DeskDate": {
+                                    "type": "string"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "OrderList": {
+                "type": "object",
+                "properties": {
+                    "length": {
+                        "type": "number"
+                    },
+                    "orders": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "OrderId": {
+                                    "type": "integer"
+                                },
+                                "OrderPayment": {
+                                    "type": "string"
+                                },
+                                "OrderTax": {
+                                    "type": "integer"
+                                },
+                                "UserId": {
+                                    "type": "integer"
+                                },
+                                "ProductId": {
+                                    "type": "integer"
+                                },
+                                "ProductName": {
+                                    "type": "string"
+                                },
+                                "ProductDesc": {
+                                    "type": "string"
+                                },
+                                "ProductPrice": {
+                                    "type": "integer"
+                                },
+                                "ProductAmount": {
+                                    "type": "integer"
+                                },
+                                "ProductCategory": {
+                                    "type": "string"
+                                },
+                                "ProductViews": {
+                                    "type": "integer"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "ProductList": {
+                "type": "object",
+                "properties": {
+                    "length": {
+                        "type": "number"
+                    },
+                    "products": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "ProductId": {
+                                    "type": "number"
+                                },
+                                "ProductName": {
+                                    "type": "string"
+                                },
+                                "ProductDesc": {
+                                    "type": "string"
+                                },
+                                "ProductPrice": {
+                                    "type": "number"
+                                },
+                                "ProductAmount": {
+                                    "type": "number"
+                                },
+                                "ProductCategory": {
+                                    "type": "string"
+                                },
+                                "ProductViews": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "Product": {
+                "type": "object",
+                "properties": {
+                    "ProductId": {
+                        "type": "number"
+                    },
+                    "ProductName": {
+                        "type": "string"
+                    },
+                    "ProductDesc": {
+                        "type": "string"
+                    },
+                    "ProductPrice": {
+                        "type": "number"
+                    },
+                    "ProductAmount": {
+                        "type": "number"
+                    },
+                    "ProductCategory": {
+                        "type": "string"
+                    },
+                    "ProductViews": {
+                        "type": "number"
+                    }
+                }
+            },
+            "Shipping": {
+                "$schema": "http://json-schema.org/draft-04/schema#",
+                "type": "object",
+                "properties": {
+                  "cep": {
+                    "type": "string"
+                  },
+                  "logradouro": {
+                    "type": "string"
+                  },
+                  "complemento": {
+                    "type": "string"
+                  },
+                  "bairro": {
+                    "type": "string"
+                  },
+                  "localidade": {
+                    "type": "string"
+                  },
+                  "uf": {
+                    "type": "string"
+                  },
+                  "ibge": {
+                    "type": "string"
+                  },
+                  "gia": {
+                    "type": "string"
+                  },
+                  "ddd": {
+                    "type": "string"
+                  },
+                  "siafi": {
+                    "type": "string"
+                  },
+                  "tax": {
+                    "type": "integer"
+                  },
+                  "message": {
+                    "type": "string"
+                  }
+                },
+                "required": [
+                  "cep",
+                  "logradouro",
+                  "complemento",
+                  "bairro",
+                  "localidade",
+                  "uf",
+                  "ibge",
+                  "gia",
+                  "ddd",
+                  "siafi",
+                  "tax",
+                  "message"
+                ]
+              },
+            "WishList": {
+                "type": "object",
+                "properties": {
+                    "length": {
+                        "type": "number"
+                    },
+                    "wishes": {
+                        "type": "array",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "UserId": {
+                                    "type": "number"
+                                },
+                                "ProductId": {
+                                    "type": "number"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "links": {},
+        "callbacks": {}
+    },
+    "security": []
+}

@@ -84,3 +84,17 @@ insert into Wish (UserId, ProductId) values
 (2, 1), (2, 4),
 (3, 1), (3, 2), (3, 3), (3, 4),
 (4, 2);
+
+-- Insert into Orders
+insert into Orders (OrderPayment, OrderTax, UserId) values
+('Credit card', 58, 1),
+('Debit card', 84, 2),
+('Money', 0, 3),
+('Check', 0, 4);
+
+-- Insert into OrderProduct
+insert into OrderProduct (OrderId, ProductId) values
+(1, 1), (1, 2), (1, 3),
+(2, 1), (2, 4),
+(3, 1), (3, 2), (3, 3), (3, 4),
+(4, 2);

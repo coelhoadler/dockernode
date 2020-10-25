@@ -117,3 +117,13 @@ services:
       MYSQL_DATABASE: amazondb
     volumes:
         - ./db-volume/init.sql:/data/application/init.sql
+  swagger:
+    build:
+      context: ./swagger-ui-master
+    command: npm start
+    environment:
+      NODE_PORT: 8091
+    ports: 
+      - 8091:8091
+    volumes:
+      - ./swagger-ui-master:/usr/swagger-ui-master
