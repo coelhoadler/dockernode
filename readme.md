@@ -74,7 +74,7 @@ solução baseada em Microserviços.__
 - Acessar a pasta do ms-x `$ cd ms-x`
 - Instalar consul `$ npm install consul`
 - Instalar dotenv `$ npm install dotenv`
-- Copiar arquivos da pasta ../shared/consul para a pasta ./ms-x/config/consul 
+- Copiar arquivos da pasta `../shared/consul` para a pasta `./ms-x/config/consul`
   (Este passo é necessário pois ainda não descobri como criar um modulo compartilhado)
   | Arquivo                 | Descrição                                                         |
   |-------------------------|-------------------------------------------------------------------|
@@ -85,24 +85,24 @@ solução baseada em Microserviços.__
   
 
 - Modificar arquivo ./ms-x/config/consul/serviceRegister.js 
-  | Propriedade                    | Tipo     | Descrição                                                                                |
-  |--------------------------------|----------|------------------------------------------------------------------------------------------|
-  | serviceName                    | string   | Nome do microserviço no consul                                                           |
-  | serviceId                      | string   | ID do microserviço no consul                                                             |
-  | serviceNote                    | string   | Nota para entendimento humano                                                            |
-  | serviceTag                     | string[] | tags para busca no consul                                                                |
-  | serviceHost                    | string   | host do microserviço http://serviceHost:servicePort                                      |
-  | servicePort                    | number   | porta do host do microserviço http://HOST:PORT                                           |
-  | consulHost                     | string   | host de acesso ao consul http://consulHost:consulPort                                    |
-  | consulPort                     | number   | porta do host de acesso ao consul http://consulHost:consulPort                           |
-  | registerIntervalTry            | number   | Intervalo entre as tentativas de registro do microserviço no consul                      |
-  | defaultsConfigurations         | object   | Configurações pertinentes ao microserviço                                                |
-  |                                |          | que devem ser iniciadas com valores padrão caso não exista valor.                        |
-  |                                |          | Essas configurações DEVEM existir no arquivo ConfigurationManager                        |
-  |                                |          | para que todos os microserviço possam acessa-la.                                         |
-  | defaultConfigurations.Ms{name} | string   | Ms{name} - name é o nome do microserviço. ex. MsShipping.                                |
-  |                                |          | Url de acesso ao microserviço. ex: http://serviceHost:servicePort                        |
-  | defaultConfigurations.{chave}  | string   | {chave} - qualquer valor existente em ConfigurationManager que precise ser inicializado. |
+  | Propriedade                    | Tipo     | Descrição                                                                                            |
+  |--------------------------------|----------|------------------------------------------------------------------------------------------------------|
+  | serviceName                    | string   | Nome do microserviço no consul                                                                       |
+  | serviceId                      | string   | ID do microserviço no consul                                                                         |
+  | serviceNote                    | string   | Nota para entendimento humano                                                                        |
+  | serviceTag                     | string[] | tags para busca no consul                                                                            |
+  | serviceHost                    | string   | host do microserviço http://serviceHost:servicePort                                                  |
+  | servicePort                    | number   | porta do host do microserviço http://HOST:PORT                                                       |
+  | consulHost                     | string   | host de acesso ao consul http://consulHost:consulPort                                                |
+  | consulPort                     | number   | porta do host de acesso ao consul http://consulHost:consulPort                                       |
+  | registerIntervalTry            | number   | Intervalo entre as tentativas de registro do microserviço no consul                                  |
+  | defaultsConfigurations         | object   | Configurações pertinentes ao microserviço                                                            |
+  |                                |          | que devem ser iniciadas com valores padrão caso não exista valor.                                    |
+  |                                |          | Essas configurações DEVEM existir no arquivo ConfigurationManager                                    |
+  |                                |          | para que todos os microserviços possam acessa-la.                                                    |
+  | defaultConfigurations.Ms{name} | string   | Ms{name} - name é o nome do microserviço. ex. MsShipping.                                            |
+  |                                |          | Url de acesso ao microserviço. ex: http://serviceHost:servicePort                                    |
+  | defaultConfigurations.{chave}  | string   | {chave} - qualquer chave/propriedade existente em ConfigurationManager que precise ser inicializado. |
   
 
 - Criar arquivo ./ms-x/.env (exemplo em ms-shipping)
